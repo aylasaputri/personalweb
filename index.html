@@ -20,12 +20,12 @@
             background-attachment: fixed;
             color: #2c3f70;
             display: flex;
-            justify-content: center; /* Memastikan wrapper utama di tengah */
+            justify-content: center;
             min-height: 100vh;
-            overflow-x: hidden; /* Mengunci pergerakan horizontal seluruh halaman */
+            overflow-x: hidden;
         }
 
-        /* SIDEBAR TETAP & DIAM */
+        /* SIDEBAR TETAP (STATIS & PERMANEN) */
         .sidebar {
             width: 250px;
             height: 100vh;
@@ -39,6 +39,13 @@
 
         .left-sidebar { left: 0; }
         .right-sidebar { right: 0; }
+
+        .sidebar-title {
+            padding: 0 25px 20px;
+            font-weight: 700;
+            color: #A5231C;
+            font-size: 1.5rem;
+        }
 
         .sidebar a {
             padding: 15px 25px;
@@ -54,11 +61,11 @@
             color: #A5231C;
         }
 
-        /* PEMBUNGKUS UTAMA YANG TERKUNCI */
+        /* KONTEN TENGAH (TERKUNCI) */
         .main-wrapper {
-            width: calc(100% - 500px); /* Lebar layar dikurangi total lebar 2 sidebar */
-            max-width: 900px; /* Batas maksimal agar tidak terlalu lebar di monitor besar */
-            margin: 0 auto; /* Menjaga posisi tetap di tengah secara absolut */
+            width: calc(100% - 500px); /* Layar dikurangi 2 sidebar */
+            max-width: 900px;
+            margin: 0 auto;
             position: relative;
             z-index: 10;
         }
@@ -70,7 +77,6 @@
             aspect-ratio: 2 / 1;
             display: flex;
             align-items: flex-end;
-            justify-content: flex-start;
             overflow: hidden;
             background: #eee;
         }
@@ -107,6 +113,7 @@
 
         h2 { color: #A5231C; margin-bottom: 15px; font-weight: 700; border-left: 5px solid #8089D2; padding-left: 12px; }
 
+        /* MUSIC PLAYER */
         .music-player-card {
             background: linear-gradient(to right, #ffffff, #fdf2f8);
             display: flex;
@@ -115,16 +122,25 @@
             gap: 15px;
         }
 
+        /* MEMORY FRAGMENTS (RESPONSIVE FIX) */
         .photo-dump {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 10px;
+            /* Menggunakan auto-fit agar gambar otomatis menyesuaikan baris */
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); 
+            gap: 12px;
+            width: 100%;
         }
 
         .photo-dump img {
-            width: 100%; height: 150px;
+            width: 100%;
+            aspect-ratio: 1 / 1; /* Biar kotak sempurna di semua layar */
             object-fit: cover;
             border-radius: 12px;
+            transition: transform 0.2s;
+        }
+
+        .photo-dump img:hover {
+            transform: scale(1.03);
         }
 
         .quote-card {
@@ -135,7 +151,7 @@
             cursor: pointer;
         }
 
-        /* RESPONSIVE: Hanya untuk layar kecil agar tidak rusak */
+        /* RESPONSIVE LAYAR KECIL (TABLET/HP) */
         @media (max-width: 1024px) {
             .sidebar { display: none; }
             .main-wrapper { width: 100%; margin: 0; }
@@ -147,7 +163,7 @@
 <body>
 
     <div class="sidebar left-sidebar">
-        <div style="padding: 0 25px 20px; font-weight: 700; color: #A5231C; font-size: 1.5rem;">Hello Duniaaa</div>
+        <div class="sidebar-title">Hello Duniaaa</div>
         <a href="#about">Base Camp</a>
         <a href="#music">Ear Candy</a>
         <a href="#edu">Main Story</a>
@@ -208,7 +224,11 @@
             <div class="card full-width" id="dump">
                 <h2>Memory Fragments</h2>
                 <div class="photo-dump">
-                    <img src="4.jpeg"> <img src="1.jpeg"> <img src="2.jpeg"> <img src="3.jpeg"><img src="rame2.jpeg">
+                    <img src="4.jpeg">
+                    <img src="1.jpeg">
+                    <img src="2.jpeg">
+                    <img src="3.jpeg">
+                    <img src="rame2.jpeg">
                 </div>
             </div>
 
@@ -230,11 +250,13 @@
     </div>
 
     <script>
+        // Jam digital
         setInterval(() => {
             const now = new Date();
             document.getElementById('clock').innerText = now.toLocaleTimeString();
         }, 1000);
 
+        // Quotes sistem
         const quotes = [
             "Hadapi semuanya langsung di muka, apapun yang terjadi tidak apa",
             "Money is the reason we exist",
